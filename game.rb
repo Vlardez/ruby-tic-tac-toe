@@ -37,11 +37,21 @@ while game.rounds < 9
   active_squares = game.board.map { |sq| sq.id unless sq.chosen }
   puts "#{game.active_player.name}, please pick a numbered square."
   player_choice = gets.chomp.upcase
-  until active_squares.include?(player_choice) || player_choice == 'EXIT'
+  until active_squares.include?(player_choice.to_i) || player_choice == 'EXIT'
     puts 'Please enter one of the available squares denoted by a number or type exit to quit'
     player_choice = gets.chomp.upcase
   end
+  exit if player_choice == 'EXIT'
+  game.lock(player_choice.to_i, game.active_player.symbol)
+  # switch active players and increment round and check for winner
+  game.display
+  game.active_player.check(WINNING_COMBOS)
+  if game.active_player.winner
+    puts "CONGRATULATIONS #{game.active_player.name}, YOU WON TIC-TAC-TOE!!"
+    break
+  end
 
+  game.active_player = game.active_player == player1 ? player2 : player1
+  game.rounds += 1
 
-  
 end
