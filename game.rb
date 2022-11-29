@@ -17,7 +17,7 @@ until SYMBOL_CHOICES.include?(player_symbol)
   player_symbol = gets.chomp.upcase
 end
 
-case player_symbol
+case player_symbol.to_i
 when 1
   player_symbol = 'X'
 when 2
@@ -47,11 +47,14 @@ while game.rounds < 9
   game.display
   game.active_player.check(WINNING_COMBOS)
   if game.active_player.winner
-    puts "CONGRATULATIONS #{game.active_player.name}, YOU WON TIC-TAC-TOE!!"
+    puts "CONGRATULATIONS #{game.active_player.name.upcase}, YOU WON TIC-TAC-TOE!!"
+    puts 'Thank you for playing :)'
     break
   end
 
   game.active_player = game.active_player == player1 ? player2 : player1
   game.rounds += 1
-
 end
+
+# in case of a tie.
+puts 'IT\'S A TIE! Thank you for playing :)' unless player1.winner || player2.winner
