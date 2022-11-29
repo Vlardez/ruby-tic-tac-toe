@@ -1,13 +1,23 @@
 # This file holds the player class
 class Player
-  attr_accessor :score, :current_turn
-  attr_reader :symbol
+  attr_accessor :score
+  attr_reader :symbol, :winner, :name
 
   def initialize(symbol)
     @score = 0
-    @current_turn = false
     @symbol = symbol
-    @name = @symbol = 'X' ? 'Xerxes' : 'Orion'
+    @name = @symbol == 'X' ? 'Xerxes' : 'Orion'
     @squares = []
+    @winner = false
+  end
+
+  def own(square)
+    @squares.push(square)
+  end
+
+  def check(winning_combos)
+    winning_combos.each do |combo|
+      @winner = true if (combo - @squares).empty?
+    end
   end
 end
