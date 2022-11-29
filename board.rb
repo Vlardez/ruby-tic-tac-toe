@@ -1,6 +1,7 @@
 # This file contains the board for the game
 class Board
   attr_accessor :rounds, :active_player
+  attr_reader :board
 
   # use an array to represent the board
   def initialize
@@ -9,6 +10,7 @@ class Board
       Square.new(i += 1)
     end
     @rounds = 0
+    @active_player = 'none'
   end
 
   def display
@@ -20,6 +22,7 @@ class Board
 
   def lock(id, symbol)
     @board[id - 1].now_chosen(symbol)
+    @active_player.own(id)
   end
 end
 
